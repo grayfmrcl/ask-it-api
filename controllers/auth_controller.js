@@ -9,7 +9,7 @@ module.exports = {
     User.findByEmail(email)
       .then(user => {
         if (user) {
-          res.status(400).json({ error: `email is already registered` })
+          res.status(400).json([{ message: `email is already registered` }])
         } else {
           User.create({ name, email, password })
             .then(new_user => {
@@ -38,7 +38,7 @@ module.exports = {
             })
           })
         } else {
-          res.status(400).json({ error: `invalid email/password` })
+          res.status(400).json({ message: `invalid email/password` })
         }
       })
       .catch(err => next(err))

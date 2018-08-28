@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 
 const User = require('../models/user')
 
-const reject = res => res.status(401).json({ error: `You are unauthorized to make this request.` })
+const reject = res => res.status(401).json({ message: `You are unauthorized to make this request.` })
 module.exports = {
   bearerAuthentication: (req, res, next) => {
     if (req.headers['authorization']) {

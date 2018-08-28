@@ -24,23 +24,22 @@ app.use('/', routers)
 
 app.use('*', (req, res, next) => {
   res.status(404).json({
-    error: 'Resource not found.'
+    message: 'Resource not found.'
   })
 })
 
 app.use(function (err, req, res, next) {
-  console.log('ERROR', err)
   if (err.name == 'ValidationError') {
     let errors = Object.values(err.errors).map(e => {
       return { message: e.message };
     })
     res.status(400).json(errors)
   } else if (err.name == 'CastError' && err.kind == 'ObjectId') {
-    res.status(404).json({ error: 'Resource not found.' })
+    res.status(404).json({ message: 'Resource not found.' })
   } else {
     console.log(err)
     res.status(500).json({
-      error: 'Something went wrong in the server.'
+      message: 'Something went wrong in the server.'
     })
   }
 })
