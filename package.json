@@ -1,0 +1,29 @@
+{
+  "name": "ask-it-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grayfmrcl/ask-it-api.git"
+  },
+  "keywords": [],
+  "author": "Grayfield M. M.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grayfmrcl/ask-it-api/issues"
+  },
+  "homepage": "https://github.com/grayfmrcl/ask-it-api#readme",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.10",
+    "morgan": "^1.9.0"
+  }
+}
