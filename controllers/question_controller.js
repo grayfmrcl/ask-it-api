@@ -6,12 +6,13 @@ const vote = (voteType, req, res, next) => {
       if (!question) {
         next()
       } else if (question.user.equals(req.user.id)) {
-        console.log('user sama')
         res.status(403).json({ message: 'You are not allowed to vote your own question' })
       } else {
-        console.log('user gak sama')
         question.vote(voteType, req.user.id)
-          .then(() => res.status(200).json())
+          .then(question => res.status(200).json({
+            success: true,
+            votes: question.votes
+          }))
       }
     })
 }
@@ -37,7 +38,16 @@ module.exports = {
       .populate('user')
       .then(question => {
         if (question) {
-          res.status(200).json(question)
+          res.status(200).json({
+            id: question.id,
+            userId: question.user._id,
+            userName: question.user.name,
+            title: question.title,
+            content: question.content,
+            createdAt: question.createdAt,
+            updatedAt: question.updatedAt,
+            votes: question.votes
+          })
         } else { next() }
       })
       .catch(err => next(err))
@@ -64,6 +74,7 @@ module.exports = {
     })
       .then(question => {
         if (question) {
+          question.title = req.body.title || question.title
           question.content = req.body.content || question.content
           question.save()
             .then(updatedQuestion => {
@@ -93,6 +104,6 @@ module.exports = {
     vote('up', req, res, next)
   },
   downvote: (req, res, next) => {
-    vote('downvote', req, res, next)
+    vote('down', req, res, next)
   }
 }

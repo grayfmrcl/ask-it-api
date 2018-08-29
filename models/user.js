@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
-    required: [true, `Email is required.`],
+    sparse: true,
     validate: {
       validator(value) {
         return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)
@@ -17,7 +17,6 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, `Password is required`],
     validate: {
       validator(value) {
         return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/.test(value)
@@ -31,12 +30,13 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.pre('save', function (next) {
-  if (this.isNew) {
+  if (this.isNew && this.password) {
     let { salt, hash } = hashWithSalt(this.password)
     this.password_salt = salt
     this.password = hash
     next()
   }
+  next()
 })
 
 userSchema.statics.findByEmail = function (email) {
