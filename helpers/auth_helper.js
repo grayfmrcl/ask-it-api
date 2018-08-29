@@ -15,6 +15,7 @@ module.exports = {
               .then(user => {
                 if (user) {
                   req.user = payload
+                  console.log('authenticated')
                   next()
                 }
                 else { reject(res) }
